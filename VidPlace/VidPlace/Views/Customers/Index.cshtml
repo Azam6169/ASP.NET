@@ -1,0 +1,35 @@
+﻿@model IEnumerable<VidPlace.Models.Customer>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Customer</h2>
+
+@if (!Model.Any()) {
+    <p>there ara no customers available</p>
+}
+else{
+    <table class="table table-borderes table-hover">
+        <thread>
+            <tr>
+                <th>Customer(click to edit)</th>
+                <th>Membership Name</th>
+                <th></th>
+            </tr>
+        </thread>
+        <tbody>
+            @foreach (var customer in Model)
+            {
+
+            <tr>
+                <td>@Html.ActionLink(customer.Name,"Edit","Customers",new { id=customer.ID},null)</td>
+                <td>@customer.Membership.Name</td>
+                <td>@Html.ActionLink("DETAIL", "Details", "Customers", new { id = customer.ID }, null)</td>
+            </tr>
+
+            }
+        </tbody>
+    </table>
+}
+

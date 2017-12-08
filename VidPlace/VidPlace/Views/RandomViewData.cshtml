@@ -1,0 +1,9 @@
+﻿@using VidPlace.Models
+@model VidPlace.Models.Media
+@{
+    ViewBag.Title = "RandomViewData";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@(((Media) ViewData["mediaObject"]).Name)</h2>
+
