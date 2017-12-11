@@ -1,0 +1,51 @@
+﻿@model IEnumerable<MvcMovie.Models.Movie>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("ایجاد یک فیلم جدید", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MovieTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReleaseDataTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Genre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MovieTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReleaseDataTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Genre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.ActionLink("ویرایش", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("جزییات", "Details", new { id=item.ID }) |
+            @Html.ActionLink("حذف", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
