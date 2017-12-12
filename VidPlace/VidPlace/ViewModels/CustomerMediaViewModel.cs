@@ -6,7 +6,7 @@ using VidPlace.Models;
 
 namespace VidPlace.ViewModels
 {
-    public class CustomerMediaViewModel
+    public class customerMediaViewModel
     {
         public Media media { get; set; }
         public List<Customer> customers { get; set; }

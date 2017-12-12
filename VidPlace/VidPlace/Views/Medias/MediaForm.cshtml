@@ -1,0 +1,58 @@
+﻿@model VidPlace.ViewModels.MediaFormViewModel
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Title</h2>
+
+@using (Html.BeginForm("Save", "Medias"))
+{
+    @Html.ValidationSummary();
+    <div class="form-group">
+        @Html.LabelFor(m => m.Media.name)
+        @Html.TextBoxFor(m => m.Media.name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Media.name)
+
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Media.MediaTypeId)
+        @Html.DropDownListFor(m => m.Media.MediaTypeId,
+        new SelectList(Model.MediaTypes, "Id", "Name"),
+        "Select Media Type", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Media.GenreId)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Media.GenreId)
+        @Html.DropDownListFor(m => m.Media.GenreId,
+        new SelectList(Model.Genres, "Id", "Name"),
+        "Select Genre", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Media.GenreId)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Media.ReleasedDate)
+        @Html.TextBoxFor(m => m.Media.ReleasedDate, "{0:d MMM yyyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Media.ReleasedDate)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Media.NumberInStock)
+        @Html.TextBoxFor(m => m.Media.NumberInStock, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Media.NumberInStock)
+    </div>
+
+    @Html.HiddenFor(m => m.Media.ID)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Save</button>
+    @Html.ActionLink("Back to List","Index","Medias")
+    @*@Html.ActionLink("Back to List", "Index", "Medias", null, new { @class="btn btn-primary"}) *@
+
+
+    }
+
+    @section scripts
+    {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+

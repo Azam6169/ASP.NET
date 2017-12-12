@@ -1,0 +1,46 @@
+﻿@model PagedList.IPagedList<VidPlace.Models.Media>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Media";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Media in VidPlace</h2>
+
+
+@using (Html.BeginForm("Index", "Medias", FormMethod.Get))
+{
+    <p>
+        Find Media by Name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<table class="table table-hover">
+    <thread>
+        <tr>
+            <th>@Html.ActionLink("Media (Click for Details)","Index", 
+               new {sortOrder = ViewBag.NameSortParameter, currentFilter = ViewBag.CurrentFilter })</th>
+            <th>
+                @Html.ActionLink("Genre", "Index",
+               new { sortOrder = ViewBag.GenreSortParameter, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        </tr>
+    </thread>
+    <tbody>
+        @foreach (var media in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(media.name, "Details", "Medias", new { id = media.ID }, null)</td>
+                <td>@media.Genre.Name</td>
+            </tr>
+            }
+    </tbody>
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0: Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model,page=> Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+
+
+

@@ -6,7 +6,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{528B5872-A268-479D-80B8-229A89DB8A4B}</ProjectGuid>
+    <ProjectGuid>{BF8AB9DA-6F3B-4B51-BD0B-202F09D10B78}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VidPlace.Tests</RootNamespace>
@@ -100,7 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VidPlace\VidPlace.csproj">
-      <Project>{31077F34-8276-4A0A-8F34-7CD33F6152E1}</Project>
+      <Project>{662582E2-559F-4108-95E9-87EAEB372FB4}</Project>
       <Name>VidPlace</Name>
     </ProjectReference>
   </ItemGroup>

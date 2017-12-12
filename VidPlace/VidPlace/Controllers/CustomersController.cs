@@ -7,125 +7,146 @@ using VidPlace.Models;
 using System.Data.Entity;
 using VidPlace.ViewModels;
 
+
 namespace VidPlace.Controllers
 {
-
+    //
     
-
     public class CustomersController : Controller
     {
-
+        //Class variables
         private ApplicationDbContext _context;
 
-        //class constructor to initialize
+        //Class contructor
         public CustomersController()
         {
             _context = new ApplicationDbContext();
-
-
         }
+               
 
-        // GET: Customers
-        public ActionResult Random()
-        {
-            var cust = new Customer()
-            { Name = "MJ Hadi", Address = "3488 Cote Des Neiges" };
-            return View(cust);
-        }
-        //execise one slide 2
+        //Execise (1) - MVC slide set 2
         public ActionResult Index()
         {
             //var customers = getCustomers();
-            var customers = _context.Customers.Include(c => c.Membership).ToList();//brings oreing data tha is related to my code, iger coding
+            var customers = _context.Customers.Include(c => c.MembershipType).ToList();
             return View(customers);
         }
-        //provide dumm data
-        private IEnumerable<Customer> getCustomers()
-        {
-            return new List<Customer>(){
-            new Customer{ID=1, Name="Juan smiro"},
-            new Customer{ID=2, Name="jose perez"},
-            };
-        }
-
-        //slide2
+                
+        //Execise (1) - MVC slide set 2
         public ActionResult Details(int id)
         {
-            //var customers = getCustomers().SingleOrDefault(c => c.ID == id);
-            var customers = _context.Customers.Include(c => c.Membership).SingleOrDefault(c=> c.ID == id);//now from the database not from the dummy 
-
-
-            if (customers == null)
-            
+            //var customer = getCustomers().SingleOrDefault(c => c.ID == id);
+            var customer = _context.Customers.Include(c => c.MembershipType).SingleOrDefault(c => c.ID == id);
+            if (customer == null)
                 return HttpNotFound();
-                return View(customers);
-            
+
+            return View(customer);
         }
 
-
-        //return a view form
+        //Action from Building Form section
         public ActionResult New()
         {
-            
-            var membershipTypes = _context.membershipTypes.ToList();
-            //obejc f my view model
-            var viewModel = new CustomerFormViewModel()
-            {
-                MembershipTypes = membershipTypes
-            };
+            //var membershipTypes = _context.MembershipTypes.ToList();
 
-            return View("CustomerForm", viewModel);//to access it from my drop down menu
-            
+            var viewModel = new CustomerFormModelView()
+            {
+                Customer = new Customer(),
+                MembershipTypes = _context.MembershipTypes.ToList()
+            };
+            return View("CustomerForm", viewModel);
         }
 
+        //Adding a new customer -  http post
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Customer customer)
         {
+            //Server side validation - start
+            if(!ModelState.IsValid)
+            {
+                var viewModel = new CustomerFormModelView()
+                {
+                    Customer = customer,
+                    MembershipTypes = _context.MembershipTypes.ToList()
+                };
 
-
-            if (customer.ID == 0)
+                return View("CustomerForm", viewModel);
+            }
+            //**********Server side validation - end *********
+            if(customer.ID == 0)
             {
                 _context.Customers.Add(customer);
             }
-            else {
-                var customerinDB = _context.Customers.Single(c=>c.ID==customer.ID);
-
-
-                //TryUpdateModel(customerinDB);
-                //default for mayor secrity code
-                //manual way to do it
+            else
+            {
+                var customerinDB = _context.Customers.Single(c => c.ID == customer.ID);
+                /*
+                 * TryUpdateModel(customerinDB);
+                 * this is defualt method to update used by MS
+                 * It has major security flow.
+                 * 
+                 * */
+                 //This manual way to it.
                 customerinDB.Name = customer.Name;
-                customerinDB.Address= customer.Address;
-                customerinDB.MembershipId = customer.MembershipId;
-                customerinDB.IsSunscribedToNewsLetter = customer.IsSunscribedToNewsLetter;
-            }
+                customerinDB.Address = customer.Address;
+                customerinDB.MembershipTypeId = customer.MembershipTypeId;
+                customerinDB.IsSubscribedToNewsLetter = customer.IsSubscribedToNewsLetter;
+                customerinDB.Birthdate = customer.Birthdate;
 
+            }
             
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Customers");
-
         }
-        //edit action 
+
+        //Edit action to edit a customer
         public ActionResult Edit(int id)
         {
-            var customerinDb = _context.Customers.SingleOrDefault(c => c.ID == id);
+            var customerinDB = _context.Customers.SingleOrDefault(c => c.ID == id);
 
-            if (customerinDb == null) 
+            if (customerinDB == null)
                 return HttpNotFound();
-            
 
-            var viewModel = new CustomerFormViewModel()
+            var viewModel = new CustomerFormModelView()
             {
-                Customer = customerinDb,
-                MembershipTypes = _context.membershipTypes.ToList()
+                Customer = customerinDB,
+                MembershipTypes = _context.MembershipTypes.ToList()
+
             };
 
-            
             return View("CustomerForm", viewModel);
-            
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //Temp method to provide dummy data
+        private IEnumerable<Customer> getCustomers()
+        {
+            return new List<Customer>
+            {
+                new Customer {ID = 1, Name = "John Smith"},
+                new Customer {ID = 2, Name = "Alice Wonderland"}
+
+            };
+        }
+        // GET: Customers
+        public ActionResult getCustomer()
+        {
+            var customer = new Customer()
+            { Name = "Alex ABC", Address = "Toronto, Canada", ID = 777 };
+            return View(customer);
         }
 
     }
-
 }

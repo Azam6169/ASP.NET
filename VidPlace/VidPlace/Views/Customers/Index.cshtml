@@ -1,33 +1,33 @@
 ﻿@model IEnumerable<VidPlace.Models.Customer>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Customers";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Customer</h2>
+<h2>Customers</h2>
 
-@if (!Model.Any()) {
-    <p>there ara no customers available</p>
+@if (!Model.Any())
+{
+    <p>There are no Customers availble.</p>
 }
-else{
-    <table class="table table-borderes table-hover">
+else
+{
+    <table class="table table-dark table-hover">
         <thread>
             <tr>
-                <th>Customer(click to edit)</th>
-                <th>Membership Name</th>
+                <th>Customer (Click to Edit)</th>
+                <th>Membership Type</th>
                 <th></th>
             </tr>
         </thread>
         <tbody>
-            @foreach (var customer in Model)
+            @foreach(var customer in Model)
             {
-
-            <tr>
-                <td>@Html.ActionLink(customer.Name,"Edit","Customers",new { id=customer.ID},null)</td>
-                <td>@customer.Membership.Name</td>
-                <td>@Html.ActionLink("DETAIL", "Details", "Customers", new { id = customer.ID }, null)</td>
-            </tr>
-
+                <tr>
+                    <td>@Html.ActionLink(customer.Name, "Edit", "Customers", new { id = customer.ID }, null)</td>
+                    <td>@customer.MembershipType.Name</td>
+                    <td>@Html.ActionLink("Details", "Details", "Customers", new { id = customer.ID }, null)</td>
+                </tr>
             }
         </tbody>
     </table>

@@ -10,31 +10,29 @@ namespace VidPlace.Models
     {
         public int ID { get; set; }
 
-
-        [Required][MaxLength(50)]
-
+        [Required(ErrorMessage ="Please enter the customer's name")]
+        [MaxLength(50)]
         public string Name { get; set; }
-        [MaxLength(255)]
+
+        //[MaxLength(255)]
+        [MaxLength(255,ErrorMessage ="Address cannot exceed 255 characters")]
         public string Address { get; set; }
 
-        public Boolean IsSunscribedToNewsLetter { get; set; }
+        public Boolean IsSubscribedToNewsLetter { get; set; }
 
+        public MembershipType MembershipType { get; set; }
+
+        [Display(Name ="Membership Type")]
+        public byte MembershipTypeId { get; set; }
+
+        [Display(Name = "Date of Birth")]
+        [Min18YearsIfMemeber]
         public DateTime? Birthdate { get; set; }
 
-
-        //new prperty voer here
-        //new property over here
-        public Membership Membership { get; set; }
-
-
-        [Display(Name="Membership Type")]
-        public byte MembershipId { get; set; }
-
-        //override toString Method
+        //override toString method
         public override string ToString()
         {
-            return "Customer Name: " + Name + " | Address: " + Address;
+            return "Customer name:" + Name + " | Address: " + Address;
         }
-        
     }
 }

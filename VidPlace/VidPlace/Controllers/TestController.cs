@@ -15,35 +15,40 @@ namespace VidPlace.Controllers
             return View();
         }
 
-        // Get getString 
+        //Get getString
         public string getString()
         {
             return "Hello World, Welcome to MVC";
         }
 
-        // Get Getcustomer
-
-        public Customer Getcustomer()
+        //Get customer
+        public Customer GetCustomer()
         {
             Customer c = new Customer();
-            c.Name = "MJ Hadi";
-            c.Address = "3488 Cote Des Neiges";
+            c.Name = "Thomas Adinson";
+            c.Address = "Montreal,QC, Canada";
             return c;
-            
-        }        
 
-        // Getview
-        public ActionResult GetView()
-        {
-            return View("MyView");
         }
 
-        // Getview
+        //getview
+        public ActionResult GetView()
+        {
+            return View("ViewTest");
+        }
+
         public ActionResult GetDeveloper()
         {
-            return View("DeveloperInfo");
-        }      
+            return View("Developer");
+        }
+
+        public ActionResult getLayoutView()
+        {
+            return View("ViewLayOut");
+        }
 
 
     }
+
+    
 }
